@@ -13,6 +13,7 @@ import base64
 from os.path import exists
 from pathlib import Path
 from story import Story
+import sys
 
 from telegram import ParseMode, Bot, Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, CallbackContext, CallbackQueryHandler, Filters
@@ -117,7 +118,7 @@ selected_story = {}
 with open('SPACE_FROG.json') as f:
    selected_story = json.load(f)
 
-updater = Updater('2041075360:AAHKscKQNqv59YHxC4PdQc_khn7lzGYz8_k')
+updater = Updater(sys.argv[1])
 
 updater.dispatcher.add_handler(CommandHandler('start', start))
 updater.dispatcher.add_handler(CallbackQueryHandler(button))
