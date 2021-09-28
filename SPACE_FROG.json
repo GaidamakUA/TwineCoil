@@ -7,8 +7,8 @@
     "creatorVersion": "2.3.14",
     "schemaName": "GTwine to JSON",
     "schemaVersion": "0.0.1",
-    "startNode": "78",
-    "createdAtMs": 1632575880400,
+    "startNode": "38",
+    "createdAtMs": 1632810086400,
     "passages": [
       {
         "name": "1",
@@ -290,15 +290,23 @@
         "id": "9",
         "text": "<div id='bottom'>(link-undo:\"<<<\")</div>|hidden)[(print: (passage:)'s name)]",
         "links": [],
-        "hooks": [],
-        "macros": [],
-        "image": [
+        "hooks": [
           {
-            "imageBase64": "ottom'>(link-undo:\"<<<\")</div>|hidden)[(print: (passage:)'s ",
-            "original": "<div id='bottom'>(link-undo:\"<<<\")</div>|hidden)[(print: (passage:)'s name)]"
+            "hookName": "hidden",
+            "hookText": "(print: (passage:)'s name)",
+            "original": "|hidden)[(print: (passage:)'s name)]",
+            "isHidden": true
           }
         ],
-        "cleanText": "<div id='bottom'>(link-undo:\"<<<\")</div>|hidden)[(print: (passage:)'s name)]"
+        "macros": [
+          {
+            "macrosName": "link-undo",
+            "macrosValue": "<<<",
+            "original": "(link-undo:\"<<<\")"
+          }
+        ],
+        "image": [],
+        "cleanText": "<div id='bottom'>(link-undo:\"<<<\")</div>"
       },
       {
         "name": "5",
@@ -679,7 +687,13 @@
         "tags": "",
         "id": "23",
         "text": "(display:\"img11\")\n\n<span class=\"big\">BLAST OFF!</span>\n\n[[>>>|12]]",
-        "links": [],
+        "links": [
+          {
+            "linkText": ">>>",
+            "passageName": "12",
+            "original": "[[>>>|12]]"
+          }
+        ],
         "hooks": [],
         "macros": [
           {
@@ -688,13 +702,8 @@
             "original": "(display:\"img11\")"
           }
         ],
-        "image": [
-          {
-            "imageBase64": "s=\"big\">BLAST OFF!</span>\n\n[[>>>",
-            "original": "<span class=\"big\">BLAST OFF!</span>\n\n[[>>>|12]]"
-          }
-        ],
-        "cleanText": "(display:\"img11\")\n\n<span class=\"big\">BLAST OFF!</span>\n\n[[>>>|12]]"
+        "image": [],
+        "cleanText": "(display:\"img11\")\n\n<span class=\"big\">BLAST OFF!</span>"
       },
       {
         "name": "img10",
@@ -1106,16 +1115,17 @@
         "tags": "nofooter",
         "id": "38",
         "text": "<span class=\"big\">SPACE FROG!</span>\na story of a frog in space\n\n[[>>>|1]]",
-        "links": [],
-        "hooks": [],
-        "macros": [],
-        "image": [
+        "links": [
           {
-            "imageBase64": "s=\"big\">SPACE FROG!</span>\na story of a frog in space\n\n[[>>&g",
-            "original": "<span class=\"big\">SPACE FROG!</span>\na story of a frog in space\n\n[[>>>|1]]"
+            "linkText": ">>>",
+            "passageName": "1",
+            "original": "[[>>>|1]]"
           }
         ],
-        "cleanText": "<span class=\"big\">SPACE FROG!</span>\na story of a frog in space\n\n[[>>>|1]]"
+        "hooks": [],
+        "macros": [],
+        "image": [],
+        "cleanText": "<span class=\"big\">SPACE FROG!</span>\na story of a frog in space"
       },
       {
         "name": "35",
@@ -1955,16 +1965,17 @@
         "tags": "nofooter",
         "id": "64",
         "text": "patreon supporters:\n|=\n<p class=\"small\">catsaveus\nrachel arjache\nnishioka diddley\nsteven hopkins\nlilli\nadept7777\nmay nyan\nzessou\nnappa!\nai phung\ncrabby cuteness</p>\n=|\n<p class=\"small\">ginah celah\nmark w. gabby li\njana dunfield\nlily craver\ngerran walker\nalan hardman\nlia cooke\nproverbialpotato\nsoshiki hakase\nfiresteel</p>\n|==|\n[[>>>|credits]]",
-        "links": [],
-        "hooks": [],
-        "macros": [],
-        "image": [
+        "links": [
           {
-            "imageBase64": "small\">catsaveus\nrachel arjache\nnishioka diddley\nsteven hopkins\nlilli\nadept7777\nmay nyan\nzessou\nnappa!\nai phung\ncrabby cuteness</p>\n=|\n<p class=\"small\">ginah celah\nmark w. gabby li\njana dunfield\nlily craver\ngerran walker\nalan hardman\nlia cooke\nproverbialpotato\nsoshiki hakase\nfiresteel</p>\n|==|\n[[>>>|cre",
-            "original": "<p class=\"small\">catsaveus\nrachel arjache\nnishioka diddley\nsteven hopkins\nlilli\nadept7777\nmay nyan\nzessou\nnappa!\nai phung\ncrabby cuteness</p>\n=|\n<p class=\"small\">ginah celah\nmark w. gabby li\njana dunfield\nlily craver\ngerran walker\nalan hardman\nlia cooke\nproverbialpotato\nsoshiki hakase\nfiresteel</p>\n|==|\n[[>>>|credits]]"
+            "linkText": ">>>",
+            "passageName": "credits",
+            "original": "[[>>>|credits]]"
           }
         ],
-        "cleanText": "patreon supporters:\n|=\n<p class=\"small\">catsaveus\nrachel arjache\nnishioka diddley\nsteven hopkins\nlilli\nadept7777\nmay nyan\nzessou\nnappa!\nai phung\ncrabby cuteness</p>\n=|\n<p class=\"small\">ginah celah\nmark w. gabby li\njana dunfield\nlily craver\ngerran walker\nalan hardman\nlia cooke\nproverbialpotato\nsoshiki hakase\nfiresteel</p>\n|==|\n[[>>>|credits]]"
+        "hooks": [],
+        "macros": [],
+        "image": [],
+        "cleanText": "patreon supporters:\n|=\n<p class=\"small\">catsaveus\nrachel arjache\nnishioka diddley\nsteven hopkins\nlilli\nadept7777\nmay nyan\nzessou\nnappa!\nai phung\ncrabby cuteness</p>\n=|\n<p class=\"small\">ginah celah\nmark w. gabby li\njana dunfield\nlily craver\ngerran walker\nalan hardman\nlia cooke\nproverbialpotato\nsoshiki hakase\nfiresteel</p>\n|==|"
       },
       {
         "name": "83",

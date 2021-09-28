@@ -12,8 +12,9 @@ import json
 import base64
 from os.path import exists
 from pathlib import Path
-from story import Story
+from story import Link, Story
 import sys
+from typing import List
 
 from telegram import ParseMode, Bot, Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, CallbackContext, CallbackQueryHandler, Filters
@@ -28,24 +29,17 @@ STORY = "story"
 def start(update: Update, context: CallbackContext) -> None:
     payload = context.args
     if len(payload) > 0:
-        json_data = base64_decode(payload[0])
-        data = json.loads(json_data)
-        node_name = data["node"]
-        link = data[LINK_REVEAL]
+        pass
+        # json_data = base64_decode(payload[0])
+        # data = json.loads(json_data)
+        # node_name = data["node"]
+        # link = data[LINK_REVEAL]
 
-        show_node(node_name, update, context)
+        # show_node(node_name, update, context)
     else:
         context.user_data.clear()
         context.user_data[STORY] = Story(selected_story)
-        reply_markup = InlineKeyboardMarkup(keyboard)
-        update.message.reply_text(f"Name: {story['name']}", reply_markup=reply_markup)
-
-def get_image_bytes(image_node_name):
-    image_node = nodes_by_name[image_node_name]
-    node_text = image_node['text']
-    image_base64 = node_text.replace("<img src='data:image/png;base64,", "").replace("'/>", "")
-    return base64.b64decode(image_base64.encode('ascii'))#base64.decodebytes(image_base64)
-
+        update_message(update, context)
 
 def button(update: Update, context: CallbackContext) -> None:
     query = update.callback_query
@@ -56,54 +50,33 @@ def button(update: Update, context: CallbackContext) -> None:
     query.answer()
     query.delete_message()
 
-    show_node(node_name, update, context)
+    story: Story = context.user_data[STORY]
+    story.navigate(node_name)
 
-def show_node(node_name: str, update: Update, context: CallbackContext, macros: str = None):
-    username = context.bot.username
-    node = nodes_by_name[node_name]
-    if macros == None:
-        text = node["cleanText"]
-        context.user_data[CURRENT_TEXT] = node["text"]
-    else:
-        text = context.user_data[CURRENT_TEXT]
-    
-    # If start -> drop data
-    # If no macro -> show clear text + save text
-    # If macro -> get saved text, mutate text, regenerate clear text
+    update_message(update, context)
+
+def update_message(update: Update, context: CallbackContext):
+    story: Story = context.user_data[STORY]
+
+    text = story.get_clean_text()
+    links: List[Link] = story.get_links()
 
     keyboard = []
-    for link in node['links']:
-        keyboard.append([InlineKeyboardButton(link['linkText'], callback_data=link['passageName'])])
+    for link in links:
+        keyboard.append([InlineKeyboardButton(link.link_text, callback_data=link.destination_name)])
 
     reply_markup = InlineKeyboardMarkup(keyboard)
 
-    macros = node["macros"]
+    text = story.get_clean_text()
+    image_base64 = story.get_image_base64()
     image_bytes = None
-    for macro in macros:
-        if macro["macrosName"] == "display":
-            text = text.replace(macro["original"], "")
-            image_bytes = get_image_bytes(macro["macrosValue"])
-        elif macro["macrosName"] == "link-reveal":
-            json_data = json.dumps({"node": node_name, LINK_REVEAL: macro["macrosValue"]})
-            data = base64_encode(json_data)
-            url = helpers.create_deep_linked_url(username, data)
-            text = text.replace(macro["original"], f'[{macro["macrosValue"]}]({url})')
+    if image_base64 != None:
+        image_bytes = base64.b64decode(image_base64.encode('ascii'))
 
     if image_bytes == None:
         update.effective_chat.send_message(text=text, reply_markup=reply_markup, parse_mode=ParseMode.MARKDOWN)
     else:
         update.effective_chat.send_photo(image_bytes, caption=text, reply_markup=reply_markup, parse_mode=ParseMode.MARKDOWN)
-
-def handle_changer_macro(text: str, macro: str) -> str:
-    if macro == "link-reveal":
-        pass
-
-def base64_encode(string):
-    """
-    Removes any `=` used as padding from the encoded string.
-    """
-    encoded = base64.urlsafe_b64encode(string.encode('ascii'))
-    return encoded.rstrip(b"=").decode('ascii')
 
 
 def base64_decode(string):

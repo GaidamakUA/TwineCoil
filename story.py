@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from dataclasses import dataclass
+from typing import List
+from telegram.utils import helpers
+import json
+import base64
 
 STORY_NAME = 'name'
 STORY_PASSAGES = 'passages'
@@ -14,22 +19,33 @@ PASSAGE_MACROS = 'macros'
 PASSAGE_IMAGES = 'image'
 
 LINK_ORIGINAL_TEXT = 'original'
-LINK_PASSAGE_NAME = 'passageName'
+LINK_TEXT = 'linkText'
+LINK_DESTINATION_NAME = 'passageName'
 
 HOOK_ORIGINAL_TEXT = 'original'
 
 MACROS_NAME = 'macrosName'
 MACROS_VALUE = 'macrosValue'
 MACROS_ORIGINAL_TEXT = 'original'
+MACROS_ATTACHED_HOOK = 'attachedHook'
 
-MACRO_DISAPLAY = 'display'
+MACRO_DISPLAY = 'display'
+MACRO_LINK_REVEAL = 'link-reveal'
 
 IMAGE_BASE_64 = 'imageBase64'
 IMAGE_ORIGINAL = 'original'
 
+JSON_NAME = 'name'
+JSON_VALUE = 'value'
+
+@dataclass
+class Link:
+    link_text: str
+    destination_name: str
+
 class Story:
     
-    def __init__(self, story_dict) -> None:        
+    def __init__(self, story_dict: dict, username: str) -> None:        
         self.passages_by_id = {}
         self.passages_by_name = {}
         self.story_dict = story_dict
@@ -40,6 +56,7 @@ class Story:
         
         first_passage_id = self.story_dict[STORY_FIRST_PASSAGE_ID]
         self.current_passage = self.passages_by_id[first_passage_id]
+        self.username = username
 
     def get_name(self) -> str:
         return self.story_dict[STORY_NAME]
@@ -49,14 +66,22 @@ class Story:
         
         for macro in self.current_passage[PASSAGE_MACROS]:
             name = macro[MACROS_NAME]
-            if (name == MACRO_DISAPLAY):
-                value = macro[MACROS_VALUE]
-                original_text = macro[MACROS_ORIGINAL_TEXT]
+            value = macro[MACROS_VALUE]
+            original_text = macro[MACROS_ORIGINAL_TEXT]
+
+            if (name == MACRO_DISPLAY):
                 passage_to_add = self.passages_by_name[value]
                 passage_to_add_text = passage_to_add[PASSAGE_TEXT]
-                print(f'orig: {text}, macro: {original_text}, replacement: {passage_to_add_text}')
                 text = text.replace(original_text, passage_to_add_text)
                 self.current_passage[PASSAGE_IMAGES].extend(passage_to_add[PASSAGE_IMAGES])
+            if (name == MACRO_LINK_REVEAL):
+                url = self._create_url(MACRO_LINK_REVEAL, value)
+                url_text = f'[{value}]({url})'
+                text = text.replace(original_text, url_text)
+
+                hook = macro[MACROS_ATTACHED_HOOK]
+                hook_original = hook[HOOK_ORIGINAL_TEXT]
+                text = text.replace(hook_original, "")
 
         for link in self.current_passage[PASSAGE_LINKS]:
             text = text.replace(link[LINK_ORIGINAL_TEXT], '')
@@ -70,7 +95,26 @@ class Story:
         return text
     
     def get_image_base64(self):
-        return self.current_passage[PASSAGE_IMAGES][0][IMAGE_BASE_64]
+        if len(self.current_passage[PASSAGE_IMAGES]) > 0:
+            return self.current_passage[PASSAGE_IMAGES][0][IMAGE_BASE_64]
 
     def navigate(self, node_name: str) -> None:
         self.current_passage = self.passages_by_name[node_name]
+    
+    def get_links(self) -> List[Link]:
+        links = []
+        for json_link in self.current_passage[PASSAGE_LINKS]:
+            links.append(Link(link_text=json_link[LINK_TEXT], destination_name=json_link[LINK_DESTINATION_NAME]))
+        return links
+    
+    def _create_url(self, link_name: str, link_value: str) -> str:
+        json_data = json.dumps({JSON_NAME: link_name, JSON_VALUE: link_value})
+        data = self._base64_urlsafe_encode(json_data)
+        return helpers.create_deep_linked_url(self.username, data)
+
+    def _base64_urlsafe_encode(self, string):
+        """
+        Removes any `=` used as padding from the encoded string.
+        """
+        encoded = base64.urlsafe_b64encode(string.encode('ascii'))
+        return encoded.rstrip(b"=").decode('ascii')
