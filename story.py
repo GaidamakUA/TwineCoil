@@ -23,6 +23,7 @@ LINK_TEXT = 'linkText'
 LINK_DESTINATION_NAME = 'passageName'
 
 HOOK_ORIGINAL_TEXT = 'original'
+HOOK_TEXT = 'hookText'
 
 MACROS_NAME = 'macrosName'
 MACROS_VALUE = 'macrosValue'
@@ -94,12 +95,23 @@ class Story:
 
         return text
     
-    def get_image_base64(self):
+    def get_image_base64(self) -> str:
         if len(self.current_passage[PASSAGE_IMAGES]) > 0:
             return self.current_passage[PASSAGE_IMAGES][0][IMAGE_BASE_64]
 
     def navigate(self, node_name: str) -> None:
         self.current_passage = self.passages_by_name[node_name]
+    
+    def navigate_by_deeplink(self, data: str) -> None:
+        json_string = self._base64_urlsafe_decode(data)
+        json_data = json.loads(json_string)
+        name = json_data[JSON_NAME]
+        value = json_data[JSON_VALUE]
+        for macro in self.current_passage[PASSAGE_MACROS]:
+            if name == MACRO_LINK_REVEAL and macro[MACROS_NAME] == MACRO_LINK_REVEAL and macro[MACROS_VALUE] == value:
+                text = self.current_passage[PASSAGE_TEXT]
+                text = text.replace(macro[MACROS_ORIGINAL_TEXT], macro[MACROS_ATTACHED_HOOK][HOOK_TEXT])
+                self.current_passage[PASSAGE_TEXT] = text
     
     def get_links(self) -> List[Link]:
         links = []
@@ -108,9 +120,12 @@ class Story:
         return links
     
     def _create_url(self, link_name: str, link_value: str) -> str:
-        json_data = json.dumps({JSON_NAME: link_name, JSON_VALUE: link_value})
-        data = self._base64_urlsafe_encode(json_data)
+        data = self._create_url_data(link_name=link_name, link_value=link_value)
         return helpers.create_deep_linked_url(self.username, data)
+
+    def _create_url_data(self, link_name: str, link_value: str) -> str:
+        json_data = json.dumps({JSON_NAME: link_name, JSON_VALUE: link_value})
+        return self._base64_urlsafe_encode(json_data)
 
     def _base64_urlsafe_encode(self, string):
         """
@@ -118,3 +133,11 @@ class Story:
         """
         encoded = base64.urlsafe_b64encode(string.encode('ascii'))
         return encoded.rstrip(b"=").decode('ascii')
+
+    def _base64_urlsafe_decode(self, string):
+        """
+        Adds back in the required padding before decoding.
+        """
+        padding = 4 - (len(string) % 4)
+        string = string + ("=" * padding)
+        return base64.urlsafe_b64decode(string.encode('ascii')).decode('ascii')

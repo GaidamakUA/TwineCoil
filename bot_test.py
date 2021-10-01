@@ -134,7 +134,6 @@ class StoryTests(unittest.TestCase):
         self.assertIsNone(story.get_image_base64())
 
     def test_link_reveal_hides_inner_text(self):
-        #Once upon a time, there was a frog. His name was (link-reveal:\"SPACE FROG\")[(show: ?hobert)].
         test_hook = "[test]"
         macro_value = "test_value"
         macro = self._create_macro(MACRO_LINK_REVEAL, macro_value, attachedHook={HOOK_ORIGINAL_TEXT: test_hook})
@@ -145,10 +144,22 @@ class StoryTests(unittest.TestCase):
         url = story._create_url(MACRO_LINK_REVEAL, macro_value)
         expected_text = f'[{macro_value}]({url})'
 
-        self.assertEquals(story.get_clean_text(), expected_text)
+        self.assertEqual(story.get_clean_text(), expected_text)
 
-    def test_link_reveal_macro_works(self):
-        pass
+    def test_link_reveal_link_works(self):
+        hook_text = 'test'
+        test_hook = f'[{hook_text}]'
+        macro_value = "test_value"
+        macro = self._create_macro(MACRO_LINK_REVEAL, macro_value, attachedHook={HOOK_ORIGINAL_TEXT: test_hook, HOOK_TEXT: hook_text})
+        text = macro[MACROS_ORIGINAL_TEXT] + test_hook
+        test_passage = self._create_passage(text=text, macros=[macro])
+        story_dict = self._create_dict(passages=[test_passage])
+        story = Story(story_dict, TEST_USER)
+        data = story._create_url_data(MACRO_LINK_REVEAL, macro_value)
+
+        story.navigate_by_deeplink(data)
+
+        self.assertEqual(story.get_clean_text(), hook_text)
 
 if __name__ == '__main__':
     unittest.main()
