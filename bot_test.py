@@ -156,10 +156,11 @@ class StoryTests(unittest.TestCase):
         story_dict = self._create_dict(passages=[test_passage])
         story = Story(story_dict, TEST_USER)
         data = story._create_url_data(MACRO_LINK_REVEAL, macro_value)
+        expected_text = macro_value + hook_text
 
         story.navigate_by_deeplink(data)
 
-        self.assertEqual(story.get_clean_text(), hook_text)
+        self.assertEqual(story.get_clean_text(), expected_text)
 
 if __name__ == '__main__':
     unittest.main()

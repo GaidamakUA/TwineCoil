@@ -110,7 +110,8 @@ class Story:
         for macro in self.current_passage[PASSAGE_MACROS]:
             if name == MACRO_LINK_REVEAL and macro[MACROS_NAME] == MACRO_LINK_REVEAL and macro[MACROS_VALUE] == value:
                 text = self.current_passage[PASSAGE_TEXT]
-                text = text.replace(macro[MACROS_ORIGINAL_TEXT], macro[MACROS_ATTACHED_HOOK][HOOK_TEXT])
+                replacement = value + macro[MACROS_ATTACHED_HOOK][HOOK_TEXT]
+                text = text.replace(macro[MACROS_ORIGINAL_TEXT], replacement)
                 self.current_passage[PASSAGE_TEXT] = text
     
     def get_links(self) -> List[Link]:
