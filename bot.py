@@ -29,17 +29,14 @@ STORY = "story"
 def start(update: Update, context: CallbackContext) -> None:
     payload = context.args
     if len(payload) > 0:
-        pass
-        # json_data = base64_decode(payload[0])
-        # data = json.loads(json_data)
-        # node_name = data["node"]
-        # link = data[LINK_REVEAL]
-
-        # show_node(node_name, update, context)
+        data = payload[0]
+        story: Story = context.user_data[STORY]
+        story.navigate_by_deeplink(data)
     else:
         context.user_data.clear()
-        context.user_data[STORY] = Story(selected_story)
-        update_message(update, context)
+        username = context.bot.username
+        context.user_data[STORY] = Story(selected_story, username)
+    update_message(update, context)
 
 def button(update: Update, context: CallbackContext) -> None:
     query = update.callback_query
@@ -77,15 +74,6 @@ def update_message(update: Update, context: CallbackContext):
         update.effective_chat.send_message(text=text, reply_markup=reply_markup, parse_mode=ParseMode.MARKDOWN)
     else:
         update.effective_chat.send_photo(image_bytes, caption=text, reply_markup=reply_markup, parse_mode=ParseMode.MARKDOWN)
-
-
-def base64_decode(string):
-    """
-    Adds back in the required padding before decoding.
-    """
-    padding = 4 - (len(string) % 4)
-    string = string + ("=" * padding)
-    return base64.urlsafe_b64decode(string.encode('ascii')).decode('ascii')
 
 selected_story = {}
 with open('SPACE_FROG.json') as f:
