@@ -45,14 +45,17 @@ class StoryTests(unittest.TestCase):
 
         self.assertEqual(story.get_clean_text(), PARAGRAPH_TEXT)
     
-    def test_hooks_are_remomoved_from_text(self):
-        test_hook = "[test_hook]"
-        test_text = PARAGRAPH_TEXT + test_hook
-        passage = self._create_passage(text = test_text, hooks=[{HOOK_ORIGINAL_TEXT: test_hook}])
+    def test_hooks_are_changed_to_text(self):
+        hook_text = "test_hook"
+        hook_original = "[{hook_text}]"
+        hook = {HOOK_ORIGINAL_TEXT: hook_original, HOOK_TEXT: hook_text, HOOK_IS_HIDDEN: False}
+        test_text = PARAGRAPH_TEXT + hook_original
+        passage = self._create_passage(text = test_text, hooks=[hook])
         story_dict = self._create_dict(passages=[passage])
         story = Story(story_dict, TEST_USER)
+        expected_text = PARAGRAPH_TEXT + hook_text
 
-        self.assertEqual(story.get_clean_text(), PARAGRAPH_TEXT)
+        self.assertEqual(story.get_clean_text(), expected_text)
     
     def test_navigation_works(self):
         target_name = '9'
@@ -161,6 +164,21 @@ class StoryTests(unittest.TestCase):
         story.navigate_by_deeplink(data)
 
         self.assertEqual(story.get_clean_text(), expected_text)
+    
+    def test_show_macro_is_working(self):
+        # "(link-reveal:\"SPACE FROG\")[(show: ?hobert)].\n|hobert)[\n(His name was actually Hobert)]"
+        hidden_hook_text = 'test'
+        hidden_hook_name = 'hook_name'
+        hidden_hook_original = f'|{hidden_hook_name})[{hidden_hook_text}]'
+        hidden_hook = {HOOK_NAME: hidden_hook_name, HOOK_TEXT: hidden_hook_text, HOOK_ORIGINAL_TEXT: hidden_hook_original, HOOK_IS_HIDDEN: True}
+
+        show_macro = self._create_macro(name='show', value=f'?{hidden_hook_name}')
+        text = show_macro[MACROS_ORIGINAL_TEXT] + hidden_hook_original
+
+        passage = self._create_passage(text=text, macros=[show_macro], hooks=[hidden_hook])
+        story = Story(self._create_dict(passages=[passage]), TEST_USER)
+
+        self.assertEquals(story.get_clean_text(), hidden_hook_text)
 
 if __name__ == '__main__':
     unittest.main()

@@ -22,8 +22,10 @@ LINK_ORIGINAL_TEXT = 'original'
 LINK_TEXT = 'linkText'
 LINK_DESTINATION_NAME = 'passageName'
 
+HOOK_NAME = 'hookName'
 HOOK_ORIGINAL_TEXT = 'original'
 HOOK_TEXT = 'hookText'
+HOOK_IS_HIDDEN = 'isHidden'
 
 MACROS_NAME = 'macrosName'
 MACROS_VALUE = 'macrosValue'
@@ -32,6 +34,7 @@ MACROS_ATTACHED_HOOK = 'attachedHook'
 
 MACRO_DISPLAY = 'display'
 MACRO_LINK_REVEAL = 'link-reveal'
+MACRO_SHOW = 'show'
 
 IMAGE_BASE_64 = 'imageBase64'
 IMAGE_ORIGINAL = 'original'
@@ -83,12 +86,22 @@ class Story:
                 hook = macro[MACROS_ATTACHED_HOOK]
                 hook_original = hook[HOOK_ORIGINAL_TEXT]
                 text = text.replace(hook_original, "")
+            if (name == MACRO_SHOW):
+                hook_name = value[1:]
+                for hook in self.current_passage[PASSAGE_HOOKS]:
+                    if hook[HOOK_NAME] == hook_name:
+                        hook[HOOK_IS_HIDDEN] = False
+                text = text.replace(original_text, "")
+
 
         for link in self.current_passage[PASSAGE_LINKS]:
             text = text.replace(link[LINK_ORIGINAL_TEXT], '')
         
         for hook in self.current_passage[PASSAGE_HOOKS]:
-            text = text.replace(hook[HOOK_ORIGINAL_TEXT], '')
+            if hook[HOOK_IS_HIDDEN]:
+                text = text.replace(hook[HOOK_ORIGINAL_TEXT], '')
+            else:
+                text = text.replace(hook[HOOK_ORIGINAL_TEXT], hook[HOOK_TEXT])
         
         for image in self.current_passage[PASSAGE_IMAGES]:
             text = text.replace(image[IMAGE_ORIGINAL], '')
