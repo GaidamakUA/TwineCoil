@@ -12,7 +12,8 @@ import json
 import base64
 from os.path import exists
 from pathlib import Path
-from story import Link, Story
+from story import Story
+from link import Link
 import sys
 from typing import List
 

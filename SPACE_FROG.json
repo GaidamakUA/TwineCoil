@@ -8,7 +8,7 @@
     "schemaName": "GTwine to JSON",
     "schemaVersion": "0.0.1",
     "startNode": "38",
-    "createdAtMs": 1632810086400,
+    "createdAtMs": 1634578437000,
     "passages": [
       {
         "name": "1",
@@ -43,6 +43,7 @@
             "attachedHook": {
               "hookText": "(show: ?hobert)",
               "original": "[(show: ?hobert)]",
+              "isHidden": false,
               "links": [],
               "hooks": [],
               "macros": [
@@ -92,6 +93,7 @@
             "attachedHook": {
               "hookText": "(show: ?little)",
               "original": "[(show: ?little)]",
+              "isHidden": false,
               "links": [],
               "hooks": [],
               "macros": [
@@ -173,6 +175,7 @@
             "attachedHook": {
               "hookText": "(show: ?star)",
               "original": "[(show: ?star)]",
+              "isHidden": false,
               "links": [],
               "hooks": [],
               "macros": [
@@ -238,6 +241,7 @@
           {
             "hookText": "\n(display: \"yesfooter\")",
             "original": "[\n(display: \"yesfooter\")]",
+            "isHidden": false,
             "links": [],
             "hooks": [],
             "macros": [
@@ -252,6 +256,7 @@
           {
             "hookText": "(display: \"nofooter\")",
             "original": "[(display: \"nofooter\")]",
+            "isHidden": false,
             "links": [],
             "hooks": [],
             "macros": [
@@ -390,6 +395,7 @@
             "attachedHook": {
               "hookText": "(show:?spacefood)",
               "original": "[(show:?spacefood)]",
+              "isHidden": false,
               "links": [],
               "hooks": [],
               "macros": [
@@ -444,6 +450,7 @@
             "attachedHook": {
               "hookText": "(show:?emptybottle)",
               "original": "[(show:?emptybottle)]",
+              "isHidden": false,
               "links": [],
               "hooks": [],
               "macros": [
@@ -498,6 +505,7 @@
             "attachedHook": {
               "hookText": "(show:?froggybank)",
               "original": "[(show:?froggybank)]",
+              "isHidden": false,
               "links": [],
               "hooks": [],
               "macros": [
@@ -650,6 +658,7 @@
             "attachedHook": {
               "hookText": "(show:?2)",
               "original": "[(show:?2)]",
+              "isHidden": false,
               "links": [],
               "hooks": [],
               "macros": [
@@ -794,6 +803,7 @@
             "attachedHook": {
               "hookText": "(show: ?ordinary)",
               "original": "[(show: ?ordinary)]",
+              "isHidden": false,
               "links": [],
               "hooks": [],
               "macros": [
@@ -899,6 +909,7 @@
             "attachedHook": {
               "hookText": "(show:?rocky)",
               "original": "[(show:?rocky)]",
+              "isHidden": false,
               "links": [],
               "hooks": [],
               "macros": [
@@ -971,6 +982,7 @@
             "attachedHook": {
               "hookText": "(show:?clumpy)",
               "original": "[(show:?clumpy)]",
+              "isHidden": false,
               "links": [],
               "hooks": [],
               "macros": [
@@ -1043,6 +1055,7 @@
             "attachedHook": {
               "hookText": "(show:?dark)",
               "original": "[(show:?dark)]",
+              "isHidden": false,
               "links": [],
               "hooks": [],
               "macros": [
@@ -1114,7 +1127,7 @@
         "name": "0",
         "tags": "nofooter",
         "id": "38",
-        "text": "<span class=\"big\">SPACE FROG!</span>\na story of a frog in space\n\n[[>>>|1]]",
+        "text": "<span class=\"big\">SPACE FROG!</span>\na story of a frog in space [hooker]\n\n[[>>>|1]]",
         "links": [
           {
             "linkText": ">>>",
@@ -1122,7 +1135,17 @@
             "original": "[[>>>|1]]"
           }
         ],
-        "hooks": [],
+        "hooks": [
+          {
+            "hookText": "hooker",
+            "original": "[hooker]",
+            "isHidden": false,
+            "links": [],
+            "hooks": [],
+            "macros": [],
+            "image": []
+          }
+        ],
         "macros": [],
         "image": [],
         "cleanText": "<span class=\"big\">SPACE FROG!</span>\na story of a frog in space"
@@ -1155,6 +1178,7 @@
             "attachedHook": {
               "hookText": "(show:?givenup)",
               "original": "[(show:?givenup)]",
+              "isHidden": false,
               "links": [],
               "hooks": [],
               "macros": [
@@ -1210,6 +1234,7 @@
           {
             "hookText": "\\\n\t(set: $spacefood to false)\\\n\t(set: $emptybottle to false)\\\n\t(set: $froggybank to false)\\\n\t(go-to: \"0\")\\\n",
             "original": "[\\\n\t(set: $spacefood to false)\\\n\t(set: $emptybottle to false)\\\n\t(set: $froggybank to false)\\\n\t(go-to: \"0\")\\\n]",
+            "isHidden": false,
             "links": [],
             "hooks": [],
             "macros": [
@@ -1250,6 +1275,7 @@
             "attachedHook": {
               "hookText": "(open-URL:\"https://npckc.site\")",
               "original": "[(open-URL:\"https://npckc.site\")]",
+              "isHidden": false,
               "links": [],
               "hooks": [],
               "macros": [
@@ -1269,6 +1295,7 @@
             "attachedHook": {
               "hookText": "(open-URL:\"https://npckc.itch.io\")",
               "original": "[(open-URL:\"https://npckc.itch.io\")]",
+              "isHidden": false,
               "links": [],
               "hooks": [],
               "macros": [
@@ -1288,6 +1315,7 @@
             "attachedHook": {
               "hookText": "(open-URL:\"https://twitter.com/npckc\")",
               "original": "[(open-URL:\"https://twitter.com/npckc\")]",
+              "isHidden": false,
               "links": [],
               "hooks": [],
               "macros": [
@@ -1307,6 +1335,7 @@
             "attachedHook": {
               "hookText": "(open-URL:\"https://patreon.com/npckc\")",
               "original": "[(open-URL:\"https://patreon.com/npckc\")]",
+              "isHidden": false,
               "links": [],
               "hooks": [],
               "macros": [
@@ -1396,6 +1425,7 @@
             "attachedHook": {
               "hookText": "(show:?understand)",
               "original": "[(show:?understand)]",
+              "isHidden": false,
               "links": [],
               "hooks": [],
               "macros": [
@@ -1498,6 +1528,7 @@
             "attachedHook": {
               "hookText": "(show:?packet)",
               "original": "[(show:?packet)]",
+              "isHidden": false,
               "links": [],
               "hooks": [],
               "macros": [
@@ -1547,6 +1578,7 @@
             "attachedHook": {
               "hookText": "(show:?cork)",
               "original": "[(show:?cork)]",
+              "isHidden": false,
               "links": [],
               "hooks": [],
               "macros": [
@@ -1596,6 +1628,7 @@
             "attachedHook": {
               "hookText": "(show:?coins)",
               "original": "[(show:?coins)]",
+              "isHidden": false,
               "links": [],
               "hooks": [],
               "macros": [
@@ -1807,6 +1840,7 @@
             "attachedHook": {
               "hookText": "(show:?star)",
               "original": "[(show:?star)]",
+              "isHidden": false,
               "links": [],
               "hooks": [],
               "macros": [
@@ -2010,6 +2044,7 @@
             "attachedHook": {
               "hookText": "(show:?earthcat)",
               "original": "[(show:?earthcat)]",
+              "isHidden": false,
               "links": [],
               "hooks": [],
               "macros": [
@@ -2134,6 +2169,7 @@
             "attachedHook": {
               "hookText": "(show:?goodday)",
               "original": "[(show:?goodday)]",
+              "isHidden": false,
               "links": [],
               "hooks": [],
               "macros": [
@@ -2541,6 +2577,7 @@
             "attachedHook": {
               "hookText": "(show: ?shiny)",
               "original": "[(show: ?shiny)]",
+              "isHidden": false,
               "links": [],
               "hooks": [],
               "macros": [
@@ -2729,6 +2766,7 @@
             "attachedHook": {
               "hookText": "(show:?bottle)",
               "original": "[(show:?bottle)]",
+              "isHidden": false,
               "links": [],
               "hooks": [],
               "macros": [
@@ -2849,6 +2887,7 @@
             "attachedHook": {
               "hookText": "(show:?rabbit)",
               "original": "[(show:?rabbit)]",
+              "isHidden": false,
               "links": [],
               "hooks": [],
               "macros": [
@@ -2893,6 +2932,7 @@
             "attachedHook": {
               "hookText": "(show:?again)",
               "original": "[(show:?again)]",
+              "isHidden": false,
               "links": [],
               "hooks": [],
               "macros": [
@@ -2937,6 +2977,7 @@
             "attachedHook": {
               "hookText": "(show:?noticed)",
               "original": "[(show:?noticed)]",
+              "isHidden": false,
               "links": [],
               "hooks": [],
               "macros": [

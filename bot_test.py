@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from logging import fatal
 import unittest
 from story import *
 from passage import *
+from link import Link
 
 TEST_USER = 'test_user'
 
@@ -14,12 +16,22 @@ HOOK_TEST_TEXT = 'hook_text'
 
 class StoryTests(unittest.TestCase):
 
-
     def _create_passage(self, id: str = DEFAULT_ID, text: str = "", name: str = "", links = [], hooks = [], macros = [], images = []) -> dict:
         return {PASSAGE_ID: id, PASSAGE_NAME: name, PASSAGE_TEXT: text, PASSAGE_LINKS:links, PASSAGE_HOOKS: hooks, PASSAGE_MACROS: macros, PASSAGE_IMAGES: images}
     
     def _create_macro(self, name: str, value: str, attachedHook: dict = None):
         return {MACROS_NAME: name, MACROS_VALUE: value, MACROS_ORIGINAL_TEXT: f'({name}: "{value}")', MACROS_ATTACHED_HOOK: attachedHook}
+
+    def _create_hook(self, name = None, text = "", macros = None):
+        hook = {HOOK_TEXT: text, HOOK_IS_HIDDEN: False, HOOK_ORIGINAL_TEXT: f'[{text}]'}
+        if name != None:
+            hook[HOOK_NAME] = name
+            hook[HOOK_ORIGINAL_TEXT] = f'|{name}>' + hook[HOOK_ORIGINAL_TEXT]
+        if macros != None:
+            hook[HOOK_MACROS] = macros
+            for macro in macros:
+                hook[HOOK_ORIGINAL_TEXT] += macro[MACROS_ORIGINAL_TEXT]
+        return hook
 
     def _create_hidden_hook(self, name: str, text: str = ""):
         return {HOOK_NAME: name, HOOK_TEXT: text, HOOK_ORIGINAL_TEXT: f'|{name})[{text}]', HOOK_IS_HIDDEN: True}
@@ -44,7 +56,7 @@ class StoryTests(unittest.TestCase):
     def test_links_are_removed_from(self):
         test_link = "[[link|somewhere]]"
         test_text = PARAGRAPH_TEST_TEXT + test_link
-        passage = self._create_passage(text = test_text, links=[{LINK_ORIGINAL_TEXT: test_link}])
+        passage = self._create_passage(text = test_text, links=[{LINK_ORIGINAL_TEXT: test_link, LINK_DESTINATION_NAME:"", LINK_TEXT: ""}])
         story_dict = self._create_dict(passages=[passage])
         story = Story(story_dict, TEST_USER)
 
@@ -65,7 +77,7 @@ class StoryTests(unittest.TestCase):
         target_name = '9'
         target_id = '10'
         test_link = "[[link|somewhere]]"
-        first_passage = self._create_passage(links=[{LINK_ORIGINAL_TEXT: test_link, LINK_DESTINATION_NAME: target_name}])
+        first_passage = self._create_passage(links=[{LINK_ORIGINAL_TEXT: test_link, LINK_DESTINATION_NAME: target_name, LINK_TEXT: ""}])
         target_passage = self._create_passage(target_id, PARAGRAPH_TEST_TEXT, name=target_name)
         story_dict = self._create_dict(passages=[first_passage, target_passage])
         story = Story(story_dict, TEST_USER)
@@ -142,10 +154,10 @@ class StoryTests(unittest.TestCase):
         self.assertIsNone(story.get_image_base64())
 
     def test_link_reveal_hides_inner_text(self):
-        test_hook = "[test]"
+        test_hook = self._create_hook(text=HOOK_TEST_TEXT)
         macro_value = "test_value"
-        macro = self._create_macro(MACRO_LINK_REVEAL, macro_value, attachedHook={HOOK_ORIGINAL_TEXT: test_hook})
-        text = macro[MACROS_ORIGINAL_TEXT] + test_hook
+        macro = self._create_macro(MACRO_LINK_REVEAL, macro_value, attachedHook=test_hook)
+        text = macro[MACROS_ORIGINAL_TEXT] + test_hook[HOOK_ORIGINAL_TEXT]
         test_passage = self._create_passage(text=text, macros=[macro])
         story_dict = self._create_dict(passages=[test_passage])
         story = Story(story_dict, TEST_USER)
@@ -155,15 +167,16 @@ class StoryTests(unittest.TestCase):
         self.assertEqual(story.get_clean_text(), expected_text)
 
     def test_link_reveal_link_works(self):
-        test_hook = f'[{HOOK_TEST_TEXT}]'
+        hook = self._create_hook(text=HOOK_TEST_TEXT)
         macro_value = "test_value"
-        macro = self._create_macro(MACRO_LINK_REVEAL, macro_value, attachedHook={HOOK_ORIGINAL_TEXT: test_hook, HOOK_TEXT: HOOK_TEST_TEXT})
-        text = macro[MACROS_ORIGINAL_TEXT] + test_hook
+        macro = self._create_macro(MACRO_LINK_REVEAL, macro_value, attachedHook=hook)
+        text = macro[MACROS_ORIGINAL_TEXT] + hook[HOOK_ORIGINAL_TEXT]
         test_passage = self._create_passage(text=text, macros=[macro])
         story_dict = self._create_dict(passages=[test_passage])
         story = Story(story_dict, TEST_USER)
         data = story._create_url_data(MACRO_LINK_REVEAL, macro_value)
         expected_text = macro_value + HOOK_TEST_TEXT
+        story.get_clean_text()
 
         story.navigate_by_deeplink(data)
 
@@ -182,17 +195,21 @@ class StoryTests(unittest.TestCase):
         self.assertEqual(story.get_clean_text(), HOOK_TEST_TEXT)
     
     def test_show_macro_in_hook_works(self):
-        # "[(show: ?hobert)].\n|hobert)[\n(His name was actually Hobert)]"
-        hidden_hook_name = "hook_name"
-        hidden_hook_text = "hook_text"
+        hidden_hook_name = "hidden_hook_name"
+        hidden_hook_text = "hidden_hook_text"
         macro = self._create_macro(MACRO_SHOW, f'?{hidden_hook_name}')
-        hook = {HOOK_TEXT: macro[MACROS_ORIGINAL_TEXT], HOOK_ORIGINAL_TEXT: f'[{macro[MACROS_ORIGINAL_TEXT]}]', HOOK_MACROS: [macro], HOOK_IS_HIDDEN: False}
+        hook = self._create_hook(text=HOOK_TEST_TEXT, macros = [macro])
         hidden_hook = self._create_hidden_hook(hidden_hook_name, hidden_hook_text)
         passage_text = hook[HOOK_ORIGINAL_TEXT] + hidden_hook[HOOK_ORIGINAL_TEXT]
         passage = self._create_passage(text=passage_text, hooks=[hook, hidden_hook])
         story = Story(self._create_dict(passages=[passage]), TEST_USER)
+        expected_text = HOOK_TEST_TEXT + hidden_hook_text
 
-        self.assertEqual(story.get_clean_text(), hidden_hook_text)
+        self.assertEqual(story.get_clean_text(), expected_text)
+    
+    def test_show_after_link_reveal_works(self):
+        # "(link-reveal:\"SPACE FROG\")[(show: ?hobert)].\n|hobert)[\n(His name was actually Hobert)]"
+        pass
 
 if __name__ == '__main__':
     unittest.main()

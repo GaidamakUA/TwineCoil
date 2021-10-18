@@ -21,7 +21,7 @@ class Story:
         self.passages_by_name = {}
         self.story_dict = story_dict
         for passage_dict in story_dict[STORY_PASSAGES]:
-            passage = Passage(passage_dict)
+            passage = Passage(passage_dict, self)
             self.passages_by_id[passage.id] = passage
             if passage.name != None:
                 self.passages_by_name[passage.name] = passage
@@ -34,7 +34,7 @@ class Story:
         return self.story_dict[STORY_NAME]
     
     def get_clean_text(self) -> str:
-        return self.current_passage.get_clean_text(self.passages_by_name, self)
+        return self.current_passage.get_clean_text(self.passages_by_name)
 
     def get_image_base64(self) -> str:
         if len(self.current_passage.images) > 0:
