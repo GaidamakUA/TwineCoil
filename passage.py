@@ -45,7 +45,6 @@ class Passage:
     
     def _preprocess_static(self):
         for link in self.links:
-            print(f'link: {link}')
             self.text = self.text.replace(link[LINK_ORIGINAL_TEXT], '')
         
         for image in self.images:
@@ -58,20 +57,16 @@ class Passage:
         return links
     
     def get_clean_text(self, passages_by_name: dict, link_creator) -> str:
-        text = self.text
         # The idea is to handle hook/macro while there are hooks and macros.
-        # And move logic to Paragraph object
         # Operations will have order
         # Show macro before hidden hooks
-        for hook in self.hooks:
-            if hook[HOOK_IS_HIDDEN]:
-                text = text.replace(hook[HOOK_ORIGINAL_TEXT], '')
-            else:
-                text = text.replace(hook[HOOK_ORIGINAL_TEXT], hook[HOOK_TEXT])
-                self.hooks.remove(hook)
-                if HOOK_MACROS in hook:
-                    self.macros.extend(hook[HOOK_MACROS])
 
+        self._process_macros(passages_by_name, link_creator)
+        self._process_hooks()
+
+        return self.text
+    
+    def _process_macros(self, passages_by_name: dict, link_creator):
         for macro in self.macros:
             name = macro[MACROS_NAME]
             value = macro[MACROS_VALUE]
@@ -82,23 +77,30 @@ class Passage:
                 for hook in self.hooks:
                     if hook[HOOK_NAME] == hook_name:
                         hook[HOOK_IS_HIDDEN] = False
-                text = text.replace(original_text, "")
+                self.text = self.text.replace(original_text, "")
                 self.macros.remove(macro)
             if (name == MACRO_DISPLAY):
-                passage_to_add = passages_by_name[value]
-                passage_to_add_text = self.text
-                text = text.replace(original_text, passage_to_add_text)
+                passage_to_add: Passage = passages_by_name[value]
+                self.text = self.text.replace(original_text, passage_to_add.text)
                 self.images.extend(passage_to_add.images)
             if (name == MACRO_LINK_REVEAL):
                 url = link_creator.create_url(MACRO_LINK_REVEAL, value)
                 url_text = f'[{value}]({url})'
-                text = text.replace(original_text, url_text)
+                self.text = self.text.replace(original_text, url_text)
 
                 hook = macro[MACROS_ATTACHED_HOOK]
                 hook_original = hook[HOOK_ORIGINAL_TEXT]
-                text = text.replace(hook_original, "")
-
-        return text
+                self.text = self.text.replace(hook_original, "")
+    
+    def _process_hooks(self):
+        for hook in self.hooks:
+            if hook[HOOK_IS_HIDDEN]:
+                self.text = self.text.replace(hook[HOOK_ORIGINAL_TEXT], '')
+            else:
+                self.text = self.text.replace(hook[HOOK_ORIGINAL_TEXT], hook[HOOK_TEXT])
+                self.hooks.remove(hook)
+                if HOOK_MACROS in hook:
+                    self.macros.extend(hook[HOOK_MACROS])
     
     def navigate_by_macro(self, name: str, value: str):
         for macro in self.macros:

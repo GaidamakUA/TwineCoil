@@ -102,7 +102,7 @@ class StoryTests(unittest.TestCase):
         another_image_data = 'image_data'
         another_image_original = 'some_text' + another_image_data
         another_text = another_image_original
-        another_passage = self._create_passage(another_id, another_text, name=another_passage_name, images=[{IMAGE_BASE_64: another_image_data, IMAGE_ORIGINAL: another_image_original}])
+        another_passage = self._create_passage(id=another_id, text=another_text, name=another_passage_name, images=[{IMAGE_BASE_64: another_image_data, IMAGE_ORIGINAL: another_image_original}])
 
         macro_original = f'({MACRO_DISPLAY}:\"{another_passage_name}\")'
         macro = {MACROS_NAME: MACRO_DISPLAY, MACROS_VALUE: another_passage_name, MACROS_ORIGINAL_TEXT: macro_original}
