@@ -8,7 +8,7 @@
     "schemaName": "GTwine to JSON",
     "schemaVersion": "0.0.1",
     "startNode": "38",
-    "createdAtMs": 1634578437000,
+    "createdAtMs": 1634619207700,
     "passages": [
       {
         "name": "1",
@@ -49,7 +49,7 @@
               "macros": [
                 {
                   "macrosName": "show",
-                  "macrosValue": "?hober",
+                  "macrosValue": "?hobert",
                   "original": "(show: ?hobert)"
                 }
               ],
@@ -99,7 +99,7 @@
               "macros": [
                 {
                   "macrosName": "show",
-                  "macrosValue": "?littl",
+                  "macrosValue": "?little",
                   "original": "(show: ?little)"
                 }
               ],
@@ -181,7 +181,7 @@
               "macros": [
                 {
                   "macrosName": "show",
-                  "macrosValue": "?sta",
+                  "macrosValue": "?star",
                   "original": "(show: ?star)"
                 }
               ],
@@ -247,7 +247,7 @@
             "macros": [
               {
                 "macrosName": "display",
-                "macrosValue": "\"yesfooter",
+                "macrosValue": "yesfooter",
                 "original": "(display: \"yesfooter\")"
               }
             ],
@@ -262,7 +262,7 @@
             "macros": [
               {
                 "macrosName": "display",
-                "macrosValue": "\"nofooter",
+                "macrosValue": "nofooter",
                 "original": "(display: \"nofooter\")"
               }
             ],
@@ -272,17 +272,17 @@
         "macros": [
           {
             "macrosName": "set",
-            "macrosValue": "$tags to (passage:)'s tag",
+            "macrosValue": "$tags to (passage:)'s tags",
             "original": "(set: $tags to (passage:)'s tags)"
           },
           {
             "macrosName": "if",
-            "macrosValue": "not ($tags contains \"nofooter\"",
+            "macrosValue": "not ($tags contains nofooter)",
             "original": "(if: not ($tags contains \"nofooter\"))"
           },
           {
             "macrosName": "else",
-            "macrosValue": ":)",
+            "macrosValue": "",
             "original": "(else:)"
           }
         ],
@@ -401,7 +401,7 @@
               "macros": [
                 {
                   "macrosName": "show",
-                  "macrosValue": "spacefoo",
+                  "macrosValue": "?spacefood",
                   "original": "(show:?spacefood)"
                 }
               ],
@@ -410,7 +410,7 @@
           },
           {
             "macrosName": "set",
-            "macrosValue": "$spacefood to tru",
+            "macrosValue": "$spacefood to true",
             "original": "(set: $spacefood to true)"
           }
         ],
@@ -456,7 +456,7 @@
               "macros": [
                 {
                   "macrosName": "show",
-                  "macrosValue": "emptybottl",
+                  "macrosValue": "?emptybottle",
                   "original": "(show:?emptybottle)"
                 }
               ],
@@ -465,7 +465,7 @@
           },
           {
             "macrosName": "set",
-            "macrosValue": "$emptybottle to tru",
+            "macrosValue": "$emptybottle to true",
             "original": "(set: $emptybottle to true)"
           }
         ],
@@ -511,7 +511,7 @@
               "macros": [
                 {
                   "macrosName": "show",
-                  "macrosValue": "froggyban",
+                  "macrosValue": "?froggybank",
                   "original": "(show:?froggybank)"
                 }
               ],
@@ -520,7 +520,7 @@
           },
           {
             "macrosName": "set",
-            "macrosValue": "$froggybank to tru",
+            "macrosValue": "$froggybank to true",
             "original": "(set: $froggybank to true)"
           }
         ],
@@ -664,7 +664,7 @@
               "macros": [
                 {
                   "macrosName": "show",
-                  "macrosValue": "",
+                  "macrosValue": "?2",
                   "original": "(show:?2)"
                 }
               ],
@@ -809,7 +809,7 @@
               "macros": [
                 {
                   "macrosName": "show",
-                  "macrosValue": "?ordinar",
+                  "macrosValue": "?ordinary",
                   "original": "(show: ?ordinary)"
                 }
               ],
@@ -915,7 +915,7 @@
               "macros": [
                 {
                   "macrosName": "show",
-                  "macrosValue": "rock",
+                  "macrosValue": "?rocky",
                   "original": "(show:?rocky)"
                 }
               ],
@@ -988,7 +988,7 @@
               "macros": [
                 {
                   "macrosName": "show",
-                  "macrosValue": "clump",
+                  "macrosValue": "?clumpy",
                   "original": "(show:?clumpy)"
                 }
               ],
@@ -1061,7 +1061,7 @@
               "macros": [
                 {
                   "macrosName": "show",
-                  "macrosValue": "dar",
+                  "macrosValue": "?dark",
                   "original": "(show:?dark)"
                 }
               ],
@@ -1127,7 +1127,7 @@
         "name": "0",
         "tags": "nofooter",
         "id": "38",
-        "text": "<span class=\"big\">SPACE FROG!</span>\na story of a frog in space [hooker]\n\n[[>>>|1]]",
+        "text": "<span class=\"big\">SPACE FROG!</span>\na story of a frog in space\n\n[[>>>|1]]",
         "links": [
           {
             "linkText": ">>>",
@@ -1135,17 +1135,7 @@
             "original": "[[>>>|1]]"
           }
         ],
-        "hooks": [
-          {
-            "hookText": "hooker",
-            "original": "[hooker]",
-            "isHidden": false,
-            "links": [],
-            "hooks": [],
-            "macros": [],
-            "image": []
-          }
-        ],
+        "hooks": [],
         "macros": [],
         "image": [],
         "cleanText": "<span class=\"big\">SPACE FROG!</span>\na story of a frog in space"
@@ -1184,7 +1174,7 @@
               "macros": [
                 {
                   "macrosName": "show",
-                  "macrosValue": "givenu",
+                  "macrosValue": "?givenup",
                   "original": "(show:?givenup)"
                 }
               ],
@@ -1240,22 +1230,22 @@
             "macros": [
               {
                 "macrosName": "set",
-                "macrosValue": "$spacefood to fals",
+                "macrosValue": "$spacefood to false",
                 "original": "(set: $spacefood to false)"
               },
               {
                 "macrosName": "set",
-                "macrosValue": "$emptybottle to fals",
+                "macrosValue": "$emptybottle to false",
                 "original": "(set: $emptybottle to false)"
               },
               {
                 "macrosName": "set",
-                "macrosValue": "$froggybank to fals",
+                "macrosValue": "$froggybank to false",
                 "original": "(set: $froggybank to false)"
               },
               {
                 "macrosName": "go-to",
-                "macrosValue": "\"0",
+                "macrosValue": "0",
                 "original": "(go-to: \"0\")"
               }
             ],
@@ -1350,7 +1340,7 @@
           },
           {
             "macrosName": "link",
-            "macrosValue": "\"READ AGAIN?",
+            "macrosValue": "READ AGAIN?",
             "original": "(link: \"READ AGAIN?\")"
           }
         ],
@@ -1431,7 +1421,7 @@
               "macros": [
                 {
                   "macrosName": "show",
-                  "macrosValue": "understan",
+                  "macrosValue": "?understand",
                   "original": "(show:?understand)"
                 }
               ],
@@ -1478,17 +1468,17 @@
           },
           {
             "macrosName": "if",
-            "macrosValue": "$spacefood is tru",
+            "macrosValue": "$spacefood is true",
             "original": "(if: $spacefood is true)"
           },
           {
             "macrosName": "else-if",
-            "macrosValue": "$emptybottle is tru",
+            "macrosValue": "$emptybottle is true",
             "original": "(else-if: $emptybottle is true)"
           },
           {
             "macrosName": "else",
-            "macrosValue": ":)",
+            "macrosValue": "",
             "original": "(else:)"
           }
         ],
@@ -1534,7 +1524,7 @@
               "macros": [
                 {
                   "macrosName": "show",
-                  "macrosValue": "packe",
+                  "macrosValue": "?packet",
                   "original": "(show:?packet)"
                 }
               ],
@@ -1584,7 +1574,7 @@
               "macros": [
                 {
                   "macrosName": "show",
-                  "macrosValue": "cor",
+                  "macrosValue": "?cork",
                   "original": "(show:?cork)"
                 }
               ],
@@ -1634,7 +1624,7 @@
               "macros": [
                 {
                   "macrosName": "show",
-                  "macrosValue": "coin",
+                  "macrosValue": "?coins",
                   "original": "(show:?coins)"
                 }
               ],
@@ -1681,17 +1671,17 @@
           },
           {
             "macrosName": "if",
-            "macrosValue": "$spacefood is tru",
+            "macrosValue": "$spacefood is true",
             "original": "(if: $spacefood is true)"
           },
           {
             "macrosName": "else-if",
-            "macrosValue": "$emptybottle is tru",
+            "macrosValue": "$emptybottle is true",
             "original": "(else-if: $emptybottle is true)"
           },
           {
             "macrosName": "else",
-            "macrosValue": ":)",
+            "macrosValue": "",
             "original": "(else:)"
           }
         ],
@@ -1846,7 +1836,7 @@
               "macros": [
                 {
                   "macrosName": "show",
-                  "macrosValue": "sta",
+                  "macrosValue": "?star",
                   "original": "(show:?star)"
                 }
               ],
@@ -2050,7 +2040,7 @@
               "macros": [
                 {
                   "macrosName": "show",
-                  "macrosValue": "earthca",
+                  "macrosValue": "?earthcat",
                   "original": "(show:?earthcat)"
                 }
               ],
@@ -2175,7 +2165,7 @@
               "macros": [
                 {
                   "macrosName": "show",
-                  "macrosValue": "goodda",
+                  "macrosValue": "?goodday",
                   "original": "(show:?goodday)"
                 }
               ],
@@ -2285,17 +2275,17 @@
           },
           {
             "macrosName": "if",
-            "macrosValue": "$spacefood is tru",
+            "macrosValue": "$spacefood is true",
             "original": "(if: $spacefood is true)"
           },
           {
             "macrosName": "else-if",
-            "macrosValue": "$emptybottle is tru",
+            "macrosValue": "$emptybottle is true",
             "original": "(else-if: $emptybottle is true)"
           },
           {
             "macrosName": "else",
-            "macrosValue": ":)",
+            "macrosValue": "",
             "original": "(else:)"
           }
         ],
@@ -2407,17 +2397,17 @@
           },
           {
             "macrosName": "if",
-            "macrosValue": "$spacefood is tru",
+            "macrosValue": "$spacefood is true",
             "original": "(if: $spacefood is true)"
           },
           {
             "macrosName": "else-if",
-            "macrosValue": "$emptybottle is tru",
+            "macrosValue": "$emptybottle is true",
             "original": "(else-if: $emptybottle is true)"
           },
           {
             "macrosName": "else",
-            "macrosValue": ":)",
+            "macrosValue": "",
             "original": "(else:)"
           }
         ],
@@ -2583,7 +2573,7 @@
               "macros": [
                 {
                   "macrosName": "show",
-                  "macrosValue": "?shin",
+                  "macrosValue": "?shiny",
                   "original": "(show: ?shiny)"
                 }
               ],
@@ -2693,17 +2683,17 @@
           },
           {
             "macrosName": "if",
-            "macrosValue": "$spacefood is tru",
+            "macrosValue": "$spacefood is true",
             "original": "(if: $spacefood is true)"
           },
           {
             "macrosName": "else-if",
-            "macrosValue": "$emptybottle is tru",
+            "macrosValue": "$emptybottle is true",
             "original": "(else-if: $emptybottle is true)"
           },
           {
             "macrosName": "else",
-            "macrosValue": ":)",
+            "macrosValue": "",
             "original": "(else:)"
           }
         ],
@@ -2772,7 +2762,7 @@
               "macros": [
                 {
                   "macrosName": "show",
-                  "macrosValue": "bottl",
+                  "macrosValue": "?bottle",
                   "original": "(show:?bottle)"
                 }
               ],
@@ -2842,17 +2832,17 @@
           },
           {
             "macrosName": "if",
-            "macrosValue": "$spacefood is tru",
+            "macrosValue": "$spacefood is true",
             "original": "(if: $spacefood is true)"
           },
           {
             "macrosName": "else-if",
-            "macrosValue": "$emptybottle is tru",
+            "macrosValue": "$emptybottle is true",
             "original": "(else-if: $emptybottle is true)"
           },
           {
             "macrosName": "else",
-            "macrosValue": ":)",
+            "macrosValue": "",
             "original": "(else:)"
           }
         ],
@@ -2893,7 +2883,7 @@
               "macros": [
                 {
                   "macrosName": "show",
-                  "macrosValue": "rabbi",
+                  "macrosValue": "?rabbit",
                   "original": "(show:?rabbit)"
                 }
               ],
@@ -2938,7 +2928,7 @@
               "macros": [
                 {
                   "macrosName": "show",
-                  "macrosValue": "agai",
+                  "macrosValue": "?again",
                   "original": "(show:?again)"
                 }
               ],
@@ -2983,7 +2973,7 @@
               "macros": [
                 {
                   "macrosName": "show",
-                  "macrosValue": "notice",
+                  "macrosValue": "?noticed",
                   "original": "(show:?noticed)"
                 }
               ],
@@ -3234,32 +3224,32 @@
         "macros": [
           {
             "macrosName": "burly men at sea sort of exploration style?) depending on where you go you find different stars!\n\nhis friend wants him to get some STARS!!! he decides to get on his littlest spaceship to find some, but his ship is very small... he can only take three things with him.\nwhat does he take?\n\n(you can choose fewer than three items if you want???)\nyou can choose to take NOTHING!!! (click the door)\n-snack (some kind of food? candy)\n-piggybank (money - can choose to buy some things!)\n-empty bottle (you never know when you'll need one!)\n\nwhat noise did the space sheep make\n\nbaaaaa\nright.\n\nthe space sheep went\n**baaaaaa**.",
-            "macrosValue": "?) depending on where you go you find different stars!\n\nhis friend wants him to get some STARS!!! he decides to get on his littlest spaceship to find some, but his ship is very small... he can only take three things with him.\nwhat does he take?\n\n(you can choose fewer than three items if you want???)\nyou can choose to take NOTHING!!! (click the door)\n-snack (some kind of food? candy)\n-piggybank (money - can choose to buy some things!)\n-empty bottle (you never know when you'll need one!)\n\nwhat noise did the space sheep make\n\nbaaaaa\nright.\n\nthe space sheep went\n**baaaaaa**.",
+            "macrosValue": ") depending on where you go you find different stars!\n\nhis friend wants him to get some STARS!!! he decides to get on his littlest spaceship to find some, but his ship is very small... he can only take three things with him.\nwhat does he take?\n\n(you can choose fewer than three items if you want???)\nyou can choose to take NOTHING!!! (click the door)\n-snack (some kind of food? candy)\n-piggybank (money - can choose to buy some things!)\n-empty bottle (you never know when you'll need one!)\n\nwhat noise did the space sheep make\n\nbaaaaa\nright.\n\nthe space sheep went\n**baaaaaa**.",
             "original": "(burly men at sea sort of exploration style?)"
           },
           {
             "macrosName": "you can choose fewer than three items if you want???)\nyou can choose to take NOTHING!!! (click the door)\n-snack (some kind of food? candy)\n-piggybank (money - can choose to buy some things!)\n-empty bottle (you never know when you'll need one!)\n\nwhat noise did the space sheep make\n\nbaaaaa\nright.\n\nthe space sheep went\n**baaaaaa**.",
-            "macrosValue": "?)\nyou can choose to take NOTHING!!! (click the door)\n-snack (some kind of food? candy)\n-piggybank (money - can choose to buy some things!)\n-empty bottle (you never know when you'll need one!)\n\nwhat noise did the space sheep make\n\nbaaaaa\nright.\n\nthe space sheep went\n**baaaaaa**.",
+            "macrosValue": ")\nyou can choose to take NOTHING!!! (click the door)\n-snack (some kind of food? candy)\n-piggybank (money - can choose to buy some things!)\n-empty bottle (you never know when you'll need one!)\n\nwhat noise did the space sheep make\n\nbaaaaa\nright.\n\nthe space sheep went\n**baaaaaa**.",
             "original": "(you can choose fewer than three items if you want???)"
           },
           {
             "macrosName": "click the door)\n-snack (some kind of food? candy)\n-piggybank (money - can choose to buy some things!)\n-empty bottle (you never know when you'll need one!)\n\nwhat noise did the space sheep make\n\nbaaaaa\nright.\n\nthe space sheep went\n**baaaaaa**.",
-            "macrosValue": "r)\n-snack (some kind of food? candy)\n-piggybank (money - can choose to buy some things!)\n-empty bottle (you never know when you'll need one!)\n\nwhat noise did the space sheep make\n\nbaaaaa\nright.\n\nthe space sheep went\n**baaaaaa**.",
+            "macrosValue": ")\n-snack (some kind of food? candy)\n-piggybank (money - can choose to buy some things!)\n-empty bottle (you never know when you'll need one!)\n\nwhat noise did the space sheep make\n\nbaaaaa\nright.\n\nthe space sheep went\n**baaaaaa**.",
             "original": "(click the door)"
           },
           {
             "macrosName": "some kind of food? candy)\n-piggybank (money - can choose to buy some things!)\n-empty bottle (you never know when you'll need one!)\n\nwhat noise did the space sheep make\n\nbaaaaa\nright.\n\nthe space sheep went\n**baaaaaa**.",
-            "macrosValue": "y)\n-piggybank (money - can choose to buy some things!)\n-empty bottle (you never know when you'll need one!)\n\nwhat noise did the space sheep make\n\nbaaaaa\nright.\n\nthe space sheep went\n**baaaaaa**.",
+            "macrosValue": ")\n-piggybank (money - can choose to buy some things!)\n-empty bottle (you never know when you'll need one!)\n\nwhat noise did the space sheep make\n\nbaaaaa\nright.\n\nthe space sheep went\n**baaaaaa**.",
             "original": "(some kind of food? candy)"
           },
           {
             "macrosName": "money - can choose to buy some things!)\n-empty bottle (you never know when you'll need one!)\n\nwhat noise did the space sheep make\n\nbaaaaa\nright.\n\nthe space sheep went\n**baaaaaa**.",
-            "macrosValue": "!)\n-empty bottle (you never know when you'll need one!)\n\nwhat noise did the space sheep make\n\nbaaaaa\nright.\n\nthe space sheep went\n**baaaaaa**.",
+            "macrosValue": ")\n-empty bottle (you never know when you'll need one!)\n\nwhat noise did the space sheep make\n\nbaaaaa\nright.\n\nthe space sheep went\n**baaaaaa**.",
             "original": "(money - can choose to buy some things!)"
           },
           {
             "macrosName": "you never know when you'll need one!)\n\nwhat noise did the space sheep make\n\nbaaaaa\nright.\n\nthe space sheep went\n**baaaaaa**.",
-            "macrosValue": "!)\n\nwhat noise did the space sheep make\n\nbaaaaa\nright.\n\nthe space sheep went\n**baaaaaa**.",
+            "macrosValue": ")\n\nwhat noise did the space sheep make\n\nbaaaaa\nright.\n\nthe space sheep went\n**baaaaaa**.",
             "original": "(you never know when you'll need one!)"
           }
         ],
