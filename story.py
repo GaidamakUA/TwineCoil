@@ -29,6 +29,7 @@ class Story:
         first_passage_id = self.story_dict[STORY_FIRST_PASSAGE_ID]
         self.current_passage: Passage = self.passages_by_id[first_passage_id]
         self.username = username
+        self.variables = {}
 
     def get_name(self) -> str:
         return self.story_dict[STORY_NAME]

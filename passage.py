@@ -35,7 +35,7 @@ class Passage:
         self.hooks = paragraph_dict[PASSAGE_HOOKS]
         self.macros = paragraph_dict[PASSAGE_MACROS]
         self.images = paragraph_dict[PASSAGE_IMAGES]
-        self.link_creator = link_creator
+        self.context = link_creator
 
         self._preprocess_static()
     
@@ -58,9 +58,17 @@ class Passage:
 
         self._process_active_hooks(passages_by_name)
         self._process_macros(passages_by_name)
+        self._process_variables()
 
         return self._get_text_without_hidden_hooks()
     
+    def _process_variables(self):
+        for variable in self.context.variables:
+            print(self.context.variables)
+            print(self.text)
+            self.text = self.text.replace(variable, self.context.variables[variable])
+            print(self.text)
+
     def _process_macros(self, passages_by_name: dict):
         request_hooks = False
         for macro in self.macros:
@@ -83,13 +91,18 @@ class Passage:
                 self.macros.remove(macro)
                 request_hooks = True
             if (name == MACRO_LINK_REVEAL):
-                url = self.link_creator.create_url(MACRO_LINK_REVEAL, value)
+                url = self.context.create_url(MACRO_LINK_REVEAL, value)
                 url_text = f'[{value}]({url})'
                 self.text = self.text.replace(original_text, url_text)
 
                 hook = macro[MACROS_ATTACHED_HOOK]
                 hook_original = hook[HOOK_ORIGINAL_TEXT]
                 self.text = self.text.replace(hook_original, "")
+            if (name == MACRO_SET):
+                variable, variable_val = value.split(' to ')
+                print(f'setting {variable} to {variable_val}')
+                self.context.variables[variable] = variable_val.replace('"', '')
+                self.text = self.text.replace(original_text, "")
         
         if request_hooks:
             self._process_active_hooks(passages_by_name)
@@ -117,7 +130,7 @@ class Passage:
     def navigate_by_macro(self, name: str, value: str):
         for macro in self.macros:
             if name == MACRO_LINK_REVEAL and macro[MACROS_NAME] == MACRO_LINK_REVEAL and macro[MACROS_VALUE] == value:
-                url = self.link_creator.create_url(MACRO_LINK_REVEAL, value)
+                url = self.context.create_url(MACRO_LINK_REVEAL, value)
                 url_text = f'[{value}]({url})'
                 replacement = value + macro[MACROS_ATTACHED_HOOK][HOOK_ORIGINAL_TEXT]
                 self.text = self.text.replace(url_text, replacement)

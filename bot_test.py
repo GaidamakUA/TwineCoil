@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from logging import fatal
+from os import name
 import unittest
 from story import *
 from passage import *
@@ -244,6 +245,35 @@ class StoryTests(unittest.TestCase):
         expected_text = link_macro[MACROS_VALUE] + hidden_hook_text
 
         self.assertEqual(story.get_clean_text(), expected_text)
+    
+    def test_set_macro_removed(self):
+        set_macro_value = '$plushieName to "Whispy"'
+        set_macro = self._create_macro(name=MACRO_SET, value=set_macro_value)
+        passage_text = PARAGRAPH_TEST_TEXT + set_macro[MACROS_ORIGINAL_TEXT]
+        passage = self._create_passage(text=passage_text, macros=[set_macro])
+        story = Story(self._create_dict(passages=[passage]), TEST_USER)
+
+        self.assertEqual(PARAGRAPH_TEST_TEXT, story.get_clean_text())
+    
+    def test_set_macro_works_between_passages(self):
+        test_link_text = "link"
+        test_link_destination = "somewhere"
+        test_link_original_text = f"[[link|{test_link_destination}]]"
+        test_link = {LINK_ORIGINAL_TEXT: test_link_original_text, LINK_DESTINATION_NAME: test_link_destination, LINK_TEXT: test_link_text}
+
+        variable_name = '$plushieName'
+        variable_value = 'Whispy'
+        set_macro_value = f'{variable_name} to "{variable_value}"'
+        set_macro = self._create_macro(name=MACRO_SET, value=set_macro_value)
+        passage_text = set_macro[MACROS_ORIGINAL_TEXT] + test_link_original_text
+        passage = self._create_passage(text=passage_text, macros=[set_macro], links=[test_link])
+        another_passage = self._create_passage(id=4, name=test_link_destination, text=variable_name)
+        story = Story(self._create_dict(passages=[passage, another_passage]), TEST_USER)
+
+        story.get_clean_text()
+        story.navigate(test_link_destination)
+
+        self.assertEqual(story.get_clean_text(), variable_value)
 
 if __name__ == '__main__':
     unittest.main()
